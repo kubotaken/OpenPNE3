@@ -4,7 +4,6 @@
 <?php include_http_metas() ?>
 <?php include_metas() ?>
 <?php include_title() ?>
-<link rel="shortcut icon" href="http://.sakurabeta.ne.jp/web/favicon.ico">
 <?php include_stylesheets() ?>
 <?php if (Doctrine::getTable('SnsConfig')->get('customizing_css')): ?>
 <link rel="stylesheet" type="text/css" href="<?php echo url_for('@customizing_css') ?>" />

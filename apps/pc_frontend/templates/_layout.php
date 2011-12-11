@@ -4,13 +4,26 @@
 <?php include_http_metas() ?>
 <?php include_metas() ?>
 <?php include_title() ?>
+<link rel="shortcut icon" href="http://.sakurabeta.ne.jp/web/favicon.ico">
 <?php include_stylesheets() ?>
-<?php include_javascripts() ?>
 <?php if (Doctrine::getTable('SnsConfig')->get('customizing_css')): ?>
 <link rel="stylesheet" type="text/css" href="<?php echo url_for('@customizing_css') ?>" />
+<link rel="stylesheet" type="text/css" media="screen" href="/web/sfJqueryReloadedPlugin/css/jQueryPlugin.css">
 <?php endif; ?>
 <?php echo $op_config->get('pc_html_head') ?>
+<?php include_javascripts() ?>
+<script src="/web/sfJqueryReloadedPlugin/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="/web/sfJqueryReloadedPlugin/js/plugins/jquery.contactable.packed.js" type="text/javascript"></script>
+<script src="/web/sfJqueryReloadedPlugin/js/plugins/jquery.validate.pack.js" type="text/javascript"></script>
+<script src="/web/sfJqueryReloadedPlugin/js/plugins/mobilyslider.js" type="text/javascript"></script>
+<script src="/web/sfJqueryReloadedPlugin/js/plugins/jquery.autopager.js" type="text/javascript"></script>
+<script src="/web/sfJqueryReloadedPlugin/js/plugins/shadowbox.js" type="text/javascript"></script>
+<script language='JavaScript' type='text/javascript'>
+    jQuery.noConflict();
+</script>
 </head>
+
+
 <body id="<?php printf('page_%s_%s', $view->getModuleName(), $view->getActionName()) ?>" class="<?php echo opToolkit::isSecurePage() ? 'secure_page' : 'insecure_page' ?>">
 <?php echo $op_config->get('pc_html_top2') ?>
 <div id="Body">
@@ -19,9 +32,51 @@
 
 <div id="Header">
 <div id="HeaderContainer">
+<h1><?php echo link_to($op_config['sns_name'], '@homepage') ?></h1>
+
+
+<!-- Loginform -->
+<?php if ($sf_user->isSNSMember()): ?>
+<?php echo op_banner('top_after') ?>
+<?php else: ?>
+<?php echo op_banner('top_before') ?>
+<div id="MailAddressLogin" class="loginForm">
+<form action="/web/member/login/authMode/MailAddress" method="post"> 
+<table>
+<tr>
+<td><label for="authMailAddress_mail_address"><font color=white><?php echo __('Mail address') ?></font></label></td>
+<td><label for="authMailAddress_password"><font color=white><?php echo __('Password') ?></font></label></td>
+</tr>
+<tr>
+<td><input type="text" name="authMailAddress[mail_address]" size="35" id="authMailAddress_mail_address" placeholder="<?php echo __('Mail address') ?>">  </td>
+<td><input type="password" name="authMailAddress[password]" size="35" id="authMailAddress_password" placeholder="<?php echo __('Password') ?>">  </td>
+<td><input type="submit" class="input_submit" value="<?php echo __('Login') ?>"></td>
+</tr>
+<tr>
+<td><input type="checkbox" name="authMailAddress[is_remember_me]" id="authMailAddress_is_remember_me"><input value="member/login" type="hidden" name="authMailAddress[next_uri]" id="authMailAddress_next_uri"><label for="authMailAddress_is_remember_me"><font color=white>&nbsp;<?php echo __('Remember me') ?></font></label></td>
+<td><span class="password_query"><a href="/web/opAuthMailAddress/helpLoginError"><?php echo __('Can not access your account?') ?></a></span></td>
+</tr>
+</table>
+</form>
+</div>
+<?php endif ?>
+</div>
+
 <?php include_partial('global/header') ?>
+
 </div><!-- HeaderContainer -->
 </div><!-- Header -->
+
+
+<?php echo $op_config->get('pc_html_top') ?>
+<div id="blankbox">
+<div id="blankContainer">
+<div id="sideBanner">
+<?php include_component('default', 'sideBannerGadgets'); ?>
+</div><!-- sideBanner -->
+</div><!-- blankContainer -->
+</div><!-- blankbox -->
+
 
 <div id="Contents">
 <div id="ContentsContainer">
@@ -76,13 +131,11 @@ include_component('default', 'localNav', $localNavOptions);
 
 </div><!-- Layout -->
 
-<div id="sideBanner">
-<?php include_component('default', 'sideBannerGadgets'); ?>
-</div><!-- sideBanner -->
-
 </div><!-- ContentsContainer -->
 </div><!-- Contents -->
 
+<div class="color"> 
+</div>
 <div id="Footer">
 <div id="FooterContainer">
 <?php include_partial('global/footer') ?>
